@@ -1,0 +1,5 @@
+transformers
+datasets
+bitsandbytes
+trl
+accelerate
