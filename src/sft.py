@@ -148,7 +148,6 @@ def main():
                                         remove_columns=["text"],
                                         batched=True, 
                                         num_proc=extra_args.group_text_num_procs)
-        print(raw_datasets)
 
     train_dataset = raw_datasets[args.dataset_train_split]
     # eval_dataset = raw_datasets[args.dataset_test_split]
