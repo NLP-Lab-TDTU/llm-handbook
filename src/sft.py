@@ -151,7 +151,13 @@ def main():
         print(raw_datasets)
 
     train_dataset = raw_datasets[args.dataset_train_split]
-    eval_dataset = raw_datasets[args.dataset_test_split]
+    # eval_dataset = raw_datasets[args.dataset_test_split]
+    try:
+        eval_dataset = raw_datasets[args.dataset_test_split]
+    except:
+        dataset = train_dataset.train_test_split(test_size=0.001)
+        train_dataset = dataset['train']
+        eval_dataset = dataset['test']
 
     
     if extra_args.do_pretraining:
