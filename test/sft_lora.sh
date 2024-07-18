@@ -1,6 +1,10 @@
 CUDA_VISIBLE_DEVICES=1 python src/sft.py \
 --seed=42 \
---model_name_or_path="Qwen/Qwen2-0.5B" \
+--model_name_or_path="vietgpt/sailor-1.8B" \
+--use_peft \
+--lora_r=32 \
+--lora_alpha=16 \
+--lora_target_modules q_proj k_proj v_proj o_proj up_proj down_proj gate_proj \
 --dataset_name='iamnguyen/athena-ultrachat' \
 --dataset_train_split='train_sft' \
 --dataset_test_split='test_sft' \
@@ -9,27 +13,20 @@ CUDA_VISIBLE_DEVICES=1 python src/sft.py \
 --num_train_epochs=1 \
 --max_seq_length=2048 \
 --per_device_train_batch_size=1 \
---gradient_accumulation_steps=128 \
---learning_rate=2e-4 \
+--gradient_accumulation_steps=64 \
+--learning_rate=1e-4 \
 --lr_scheduler_type='cosine' \
 --optim='paged_adamw_8bit' \
---warmup_ratio=0.01 \
---per_device_eval_batch_size=2 \
---output_dir="output" \
+--warmup_ratio=0.05 \
+--per_device_eval_batch_size=1 \
+--output_dir="outputs" \
 --logging_strategy='steps' \
 --logging_steps=1 \
 --max_steps=-1 \
 --save_strategy='steps' \
 --save_total_limit=1 \
---save_steps=4 \
+--save_steps=1 \
 --push_to_hub=false \
 --hub_strategy='checkpoint' \
 --hub_model_id='...' \
 --gradient_checkpointing 
-
- 
-
-# --use_peft \
-# --lora_r=64 \
-# --lora_alpha=16 \
-# --lora_target_modules q_proj k_proj v_proj o_proj up_proj down_proj gate_proj \
