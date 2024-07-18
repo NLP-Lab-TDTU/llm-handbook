@@ -115,7 +115,7 @@ def main():
     # print(args)
     # print(training_args)
     # print(model_config)
-    print(extra_args)
+    # print(extra_args)
 
     torch_dtype = (
         model_config.torch_dtype
@@ -141,13 +141,14 @@ def main():
     else:
         raw_datasets = load_dataset(args.dataset_name)
     print(raw_datasets)
-    print(extra_args.do_pretraining)
+    # print(extra_args.do_pretraining)
     if extra_args.do_pretraining is True:
         raw_datasets = raw_datasets.map(tokenize_function_and_group_texts, 
                                         fn_kwargs={"tokenizer": tokenizer, "block_size": training_args.max_seq_length }, 
                                         remove_columns=["text"],
                                         batched=True, 
                                         num_proc=extra_args.group_text_num_procs)
+        print(raw_datasets)
 
     train_dataset = raw_datasets[args.dataset_train_split]
     eval_dataset = raw_datasets[args.dataset_test_split]
